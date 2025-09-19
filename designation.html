@@ -1,0 +1,85 @@
+﻿<script>
+  const apiUrl = "http://127.0.0.1:5000/designations";
+
+  // Load existing designations
+  async function loadDesignations() {
+    let response = await fetch(apiUrl);
+    let data = await response.json();
+    let table = document.getElementById("designationTable").getElementsByTagName("tbody")[0];
+    table.innerHTML = "";
+    data.forEach(d => {
+      let row = table.insertRow();
+      row.insertCell(0).innerHTML = d.rank;
+      row.insertCell(1).innerHTML = d.designation;
+      row.insertCell(2).innerHTML =
+        `<button class='edit-btn' onclick='editRow(this, ${d.id})'>Edit</button>
+         <button class='delete-btn' onclick='deleteRow(${d.id})'>Delete</button>`;
+    });
+  }
+
+  // Add designation
+  async function addDesignation() {
+    let rank = document.getElementById("rank").value;
+    let designation = document.getElementById("designation").value;
+
+    if (rank && designation) {
+      await fetch(apiUrl, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ rank, designation })
+      });
+      loadDesignations();
+      document.getElementById("rank").value = "";
+      document.getElementById("designation").value = "";
+    } else {
+      alert("Please enter both Rank and Designation");
+    }
+  }
+
+  // Edit designation
+  function editRow(btn, id) {
+    let row = btn.parentNode.parentNode;
+    let rank = row.cells[0].innerText;
+    let designation = row.cells[1].innerText;
+
+    row.cells[0].innerHTML = `<input type='number' value='${rank}'>`;
+    row.cells[1].innerHTML = `<input type='text' value='${designation}'>`;
+    row.cells[2].innerHTML =
+      `<button class='save-btn' onclick='saveRow(this, ${id})'>Save</button>
+       <button class='delete-btn' onclick='deleteRow(${id})'>Delete</button>`;
+  }
+
+  // Save updated designation
+  async function saveRow(btn, id) {
+    let row = btn.parentNode.parentNode;
+    let newRank = row.cells[0].children[0].value;
+    let newDesignation = row.cells[1].children[0].value;
+
+    await fetch(apiUrl + "/" + id, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ rank: newRank, designation: newDesignation })
+    });
+    loadDesignations();
+  }
+
+  // Delete designation
+  async function deleteRow(id) {
+    await fetch(apiUrl + "/" + id, { method: "DELETE" });
+    loadDesignations();
+  }
+
+  // Live Date & Time
+  function updateDateTime() {
+    let now = new Date();
+    let options = { weekday: "long", year: "numeric", month: "long", day: "numeric" };
+    let date = now.toLocaleDateString(undefined, options);
+    let time = now.toLocaleTimeString();
+    document.getElementById("datetime").innerHTML = date + " | " + time;
+  }
+  setInterval(updateDateTime, 1000);
+  updateDateTime();
+
+  // Load designations when page opens
+  loadDesignations();
+</script>
