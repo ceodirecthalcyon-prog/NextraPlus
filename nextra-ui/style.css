@@ -1,0 +1,121 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: #121212;
+}
+
+.container {
+  display: flex;
+  width: 900px;
+  height: 550px;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+}
+
+/* Left Panel - Yellow/Orange Gradient */
+.left-panel {
+  flex: 1;
+  background: linear-gradient(160deg, #fbc02d, #f57c00, #ef6c00);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+  color: #fff;
+  position: relative;
+}
+
+.left-panel::before {
+  content: '';
+  position: absolute;
+  width: 250px;
+  height: 250px;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 50%;
+  top: 15%;
+  left: 20%;
+  filter: blur(80px);
+}
+
+.left-panel .logo {
+  width: 220px; margin-bottom: 40px;
+  margin-bottom: 20px;
+}
+
+.left-panel h2 {
+  margin-bottom: 10px;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.left-panel p {
+  font-size: 15px;
+  text-align: center;
+  opacity: 0.9;
+}
+
+/* Right Panel - Dark Theme */
+.right-panel {
+  flex: 1.5;
+  padding: 40px;
+  background: #1e1e1e;
+  color: #fff;
+}
+
+.right-panel h2 {
+  margin-bottom: 20px;
+  font-size: 26px;
+  font-weight: bold;
+  color: #ffcc80;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+input {
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  outline: none;
+  width: 100%;
+  font-size: 15px;
+}
+
+.btn {
+  background: #ff9800;
+  color: #fff;
+  border: none;
+  padding: 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.btn:hover {
+  background: #f57c00;
+}
+
+.login-link {
+  text-align: center;
+  margin-top: 15px;
+  font-size: 14px;
+}
+
+.login-link a {
+  color: #ffcc80;
+  text-decoration: none;
+}
